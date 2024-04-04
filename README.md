@@ -30,50 +30,52 @@ This endpoint fits stock data to the GARCH(1,1) model. It allows users to specif
 
 ```json
 {
-  "ticker": "AAPL",
+  "ticker": "SHOPERSTOP.BSE",
   "use_new_data": true,
   "n_observations": 100,
   "p": 1,
   "q": 1
-}
-
+} ```
 
 #### Response
-- success (boolean): Indicates whether the fit was successful.
-- message (string): Name of the saved model file in the local storage directory.
+```json
 
-
-
-
-
-### Get Result of your Predictios
-
-#### Endpoint
+{
+  "success": true,
+  "message": "Model saved as AAPL_garch_model.pkl"
+}```
 
 `GET /predict`
 
 #### Description
 
-This endpoint finds the stored model from your local directory and returns the volatility 
+This endpoint predicts volatility using a fitted GARCH model.
 
-#### Parameters
+#### Request Parameters
 
 - `ticker` (string): Ticker symbol for selecting the company's stock data.
-- `n_days` (integer): Number of days of data to be shown.
-
+- `n_days` (integer): Number of days for which volatility is to be predicted.
 
 #### Request Body Example
 
 ```json
 {
-  "ticker": "AAPL",
-  "n_observations": 100,
-}
+  "ticker": "SHOPERSTOP.BSE",
+  "n_days": 100,
+}```
 
 
 #### Response
-- success (boolean): Indicates whether the fit was successful.
-- message (string): Name of the saved model file in the local storage directory.
-- forecast (dictionary): The volality precitions
+```json
+{
+  "success": true,
+  "predictions": [0.025, 0.032, 0.021, ...],
+  "message": "" ,
+}```
 
+#### Status Codes
+`200 OK`: Successful request.
+`400 Bad Request`: Invalid parameters or missing required parameters.
+`404 Not Found`: Resource not found.
+`500 Internal Server Error`: Server encountered an error while processing the request.
 
